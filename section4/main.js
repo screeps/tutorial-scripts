@@ -9,7 +9,9 @@ module.exports.loop = function () {
         }
     }
 
-    var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+    var harvesters = _.filter(Game.creeps, function(creep) {
+        return creep.memory.role == 'harvester';
+    });
     console.log('Harvesters: ' + harvesters.length);
 
     if(harvesters.length < 2) {
