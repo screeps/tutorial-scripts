@@ -2,29 +2,37 @@ const checkForEnemiesAndRespond = {
 
   /** @param {Creep} creep, serf, indentured servant **/
   run: function(creep) {
-    const hostileCreeps = creep.room.find(Game.HOSTILE_CREEPS);
+    const hostileCreeps = creep.room.find(FIND_HOSTILE_CREEPS);
 
     // in case we want to know this later
-    creep.memory.war = false;
+    Memory.war = false;
     if (hostileCreeps.length) {
-      creep.memory.war = true;
-    }
+      Memory.war = true;
 
-    // if warrior, do a thing
+       // if warrior, do a thing
     if (isCapableOfAggression(creep)) { // todo: unsure what this role will be named. is it prudent to base this off role?
       creep.say('😡')
       creep.moveTo(hostileCreeps[0]);
       creep.attack(hostileCreeps[0]); // may only work for melee
     } else {
       // if wienie, run away.
-      const towers = creep.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}};
+      creep.say('😱')
+      const towers = creep.room.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
+      //console.log(towers)
       if (towers.length) {
-        creepmoveTo(towers[0]);
+        creep.moveTo(towers[0]);
       } else {
-        creepmoveTo(Game.spawns[0]);
+        var spawns = creep.room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structure.structureType == STRUCTURE_SPAWN );
+            }
+        });
+       // console.log(spawns)
+        creep.moveTo(spawns[0]);
       }
        // assumes closest is '0'
       // What if at spawn and still being attacked?
+    }
     }
   }
 };
