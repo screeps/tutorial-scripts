@@ -1,27 +1,3 @@
-// NOT used yet, not sure if it actually is helpful to draw a circle around the army.
-whereAreHostiles(creep, hostileCreeps) {
-  let x = 0
-  let y = 0
-  let small = 51 // larger than room
-  let large = -1
-  hostileCreeps.forEach((badGuy) => {
-    if (!creep.memory.attackedBy) creep.memory.attackedBy = []
-    creep.memory.attackedBy.push(badguy.owner) // metrics are important
-    x += badguy.pos.x
-    y += badguy.pos.y
-    if(badguy.pos.x < small  ) small = badguy.pos.x
-    if(badguy.pos.y < small  ) small = badguy.pos.y
-    if(badguy.pos.x < large  ) large = badguy.pos.x
-    if(badguy.pos.y < large  ) large = badguy.pos.y
-  })
-
-   const averageX = Math.round(x/hostileCreeps.length);
-   const averageY = Math.round(y/hostileCreeps.length);
-   const spread = large - small;
-
-   return ({x: averageX, y: averagey, spread})
-  //return an "area", maybe average or
-}
 
 const checkForEnemiesAndRespond = {
 
@@ -42,10 +18,9 @@ const checkForEnemiesAndRespond = {
       creep.attack(hostileCreeps[0]); // may only work for melee
     } else {
       // if wienie, run away.
-      
-      // where are hostile creeps? move in response
-      // how do we want harvesters to respond if in another room than where spawn is?
-      // go back to spawn?   Game.spawns[0]
+
+      // where are hostile creeps? move in response?
+
       creepmoveTo(Game.spawns[0]) // assumes closest is '0'
       // What if at spawn and still being attacked?
     }
