@@ -5,7 +5,7 @@ var roleHarvester = {
         if(creep.carry.energy < creep.carryCapacity) {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+                creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#fff'}});
             }
         }
         else {
@@ -17,12 +17,18 @@ var roleHarvester = {
                 }
             });
             if(targets.length > 0) {
-                if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+                if(!creep.memory.harvestIndex){
+                    creep.memory.harvestIndex = getRandomInt(targets.length -1)
+                }
+                if(creep.transfer(targets[creep.memory.harvestIndex], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(targets[creep.memory.harvestIndex], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }
         }
     }
 };
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 module.exports = roleHarvester;

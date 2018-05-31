@@ -22,11 +22,18 @@ var roleBuilder = {
         }
         else {
             var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+            if(!creep.memory.harvestIndex){
+                creep.memory.harvestIndex = getRandomInt(sources.length -1)
+            }
+
+            if(creep.harvest(sources[creep.memory.harvestIndex]) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(sources[creep.memory.harvestIndex], {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         }
     }
 };
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 module.exports = roleBuilder;
