@@ -1,4 +1,3 @@
-
 const checkForEnemiesAndRespond = {
 
   /** @param {Creep} creep, serf, indentured servant **/
@@ -18,10 +17,13 @@ const checkForEnemiesAndRespond = {
       creep.attack(hostileCreeps[0]); // may only work for melee
     } else {
       // if wienie, run away.
-
-      // where are hostile creeps? move in response?
-
-      creepmoveTo(Game.spawns[0]) // assumes closest is '0'
+      const towers = creep.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}};
+      if (towers.length) {
+        creepmoveTo(towers[0]);
+      } else {
+        creepmoveTo(Game.spawns[0]);
+      }
+       // assumes closest is '0'
       // What if at spawn and still being attacked?
     }
   }
