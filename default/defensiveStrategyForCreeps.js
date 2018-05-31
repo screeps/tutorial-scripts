@@ -6,6 +6,7 @@ const checkForEnemiesAndRespond = {
 
     // in case we want to know this later
     Memory.war = false;
+    let isWarrior = 0
     if (hostileCreeps.length) {
       Memory.war = true;
 
@@ -14,6 +15,7 @@ const checkForEnemiesAndRespond = {
       creep.say('😡')
       creep.moveTo(hostileCreeps[0]);
       creep.attack(hostileCreeps[0]); // may only work for melee
+      isWarrior = true
     } else {
       // if wienie, run away.
       creep.say('😱')
@@ -33,7 +35,12 @@ const checkForEnemiesAndRespond = {
        // assumes closest is '0'
       // What if at spawn and still being attacked?
     }
+
     }
+    return {isWarrior, hostileCreeps}
+    /* returning this so we can spawn warriors if none exist
+        Game.spawns['Spawn1'].spawnCreep( [ATTACK, MOVE, MOVE], Game.time,  { memory: { role: 'warrior' } } );
+    */
   }
 };
 
